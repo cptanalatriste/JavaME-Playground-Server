@@ -1,6 +1,5 @@
 package pe.edu.pucp.teleprocesamiento.server.sms;
 
-import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
@@ -14,6 +13,8 @@ import pe.edu.pucp.teleprocesamiento.server.status.RoomStatus;
 public class SmsAlertManager extends Thread {
 
     private static final String CLIENT_NUMBER = "+5550000";
+    private static final String PORT = "5000";
+    public static final int SMS_PERIOD = 2000;
     private static final int MAXIMUM_TEMP = 27;
     private static final String ALERT_MESSAGE =
             "La temperatura ha superado los "
@@ -26,7 +27,7 @@ public class SmsAlertManager extends Thread {
 
     public void run() {
         while (true) {
-            String address = "sms://" + CLIENT_NUMBER;
+            String address = "sms://" + CLIENT_NUMBER + ":" + PORT;
             try {
                 RoomStatus roomStatus = RoomStatus.getInstance();
                 final int temperature = roomStatus.getTemperature();
@@ -41,7 +42,7 @@ public class SmsAlertManager extends Thread {
                     System.out.println("message: " + message);
                     connection.close();
                 }
-                Thread.sleep(2000);
+                Thread.sleep(SMS_PERIOD);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

@@ -15,8 +15,6 @@ import pe.edu.pucp.teleprocesamiento.server.sms.SmsAlertManager;
  */
 public class PlaygroundServerApp extends MIDlet {
 
-    public static final int SMS_PERIOD = 2000;
-
     public void startApp() {
         initialize();
     }
