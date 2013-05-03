@@ -2,9 +2,6 @@ package pe.edu.pucp.teleprocesamiento.server;
 
 import pe.edu.pucp.teleprocesamiento.server.http.HttpConnectionProcessor;
 import java.io.IOException;
-import java.util.Timer;
-import javax.microedition.io.Connector;
-import javax.microedition.io.StreamConnection;
 import javax.microedition.io.StreamConnectionNotifier;
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
@@ -56,8 +53,7 @@ public class PlaygroundServerApp extends MIDlet {
         try {
             ServerForm serverForm = new ServerForm();
             Display.getDisplay(this).setCurrent(serverForm);
-            //startHttpListening(serverForm);
-            startTempMonitoring(serverForm);
+            startServices(serverForm);
         } catch (Exception ex) {
             ex.printStackTrace();
             Alert alertScreen = new Alert("Error", "Ha ocurrido un error inesperado",
@@ -66,19 +62,10 @@ public class PlaygroundServerApp extends MIDlet {
         }
     }
 
-    private void startHttpListening(ServerForm serverForm) throws IOException {
-        connectionNotifier = (StreamConnectionNotifier) Connector.open("socket://:80");
-        while (true) {
-            StreamConnection connection = connectionNotifier.acceptAndOpen();
-            HttpConnectionProcessor serverConnection = new HttpConnectionProcessor(
-                    connection, serverForm);
-            serverConnection.start();
-        }
-    }
-
-    private void startTempMonitoring(ServerForm serverForm) {
-        Timer timer = new Timer();
+    private void startServices(ServerForm serverForm) throws IOException {
+        HttpConnectionProcessor serverConnection = new HttpConnectionProcessor(serverForm);
+        serverConnection.start();
         SmsAlertManager alertManager = new SmsAlertManager(serverForm);
-        timer.schedule(alertManager, 0, SMS_PERIOD);
+        alertManager.start();
     }
 }

@@ -1,7 +1,6 @@
 package pe.edu.pucp.teleprocesamiento.server.sms;
 
 import java.io.IOException;
-import java.util.TimerTask;
 import javax.microedition.io.Connector;
 import javax.wireless.messaging.MessageConnection;
 import javax.wireless.messaging.TextMessage;
@@ -12,10 +11,10 @@ import pe.edu.pucp.teleprocesamiento.server.status.RoomStatus;
  *
  * @author carlos
  */
-public class SmsAlertManager extends TimerTask {
+public class SmsAlertManager extends Thread {
 
     private static final String CLIENT_NUMBER = "+5550000";
-    private static final int MAXIMUM_TEMP = 25;
+    private static final int MAXIMUM_TEMP = 27;
     private static final String ALERT_MESSAGE =
             "La temperatura ha superado los "
             + MAXIMUM_TEMP + " grados centígrados";
@@ -26,23 +25,27 @@ public class SmsAlertManager extends TimerTask {
     }
 
     public void run() {
-        String address = "sms://" + CLIENT_NUMBER;
-        try {
-            RoomStatus roomStatus = RoomStatus.getInstance();
-            final int temperature = roomStatus.getTemperature();
-            System.out.println("temperature: " + temperature);
-            serverForm.refreshForm();
-            if (temperature > MAXIMUM_TEMP) {
-                MessageConnection connection = (MessageConnection) Connector.open(address);
-                TextMessage message = (TextMessage) connection.newMessage(
-                        MessageConnection.TEXT_MESSAGE);
-                message.setPayloadText(ALERT_MESSAGE);
-                connection.send(message);
-                System.out.println("message: " + message);
-                connection.close();
+        while (true) {
+            String address = "sms://" + CLIENT_NUMBER;
+            try {
+                RoomStatus roomStatus = RoomStatus.getInstance();
+                final int temperature = roomStatus.getTemperature();
+                System.out.println("temperature: " + temperature);
+                serverForm.refreshForm();
+                if (temperature > MAXIMUM_TEMP) {
+                    MessageConnection connection = (MessageConnection) Connector.open(address);
+                    TextMessage message = (TextMessage) connection.newMessage(
+                            MessageConnection.TEXT_MESSAGE);
+                    message.setPayloadText(ALERT_MESSAGE);
+                    connection.send(message);
+                    System.out.println("message: " + message);
+                    connection.close();
+                }
+                Thread.sleep(2000);
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+
         }
     }
 }
