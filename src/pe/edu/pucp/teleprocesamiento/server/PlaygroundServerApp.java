@@ -16,37 +16,15 @@ import pe.edu.pucp.teleprocesamiento.server.sms.SmsAlertManager;
 public class PlaygroundServerApp extends MIDlet {
 
     public static final int SMS_PERIOD = 2000;
-    private StreamConnectionNotifier connectionNotifier;
 
     public void startApp() {
         initialize();
     }
 
     public void pauseApp() {
-        try {
-            if (connectionNotifier != null) {
-                connectionNotifier.close();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Alert alertScreen = new Alert("Error", "Ha ocurrido un error inesperado",
-                    null, AlertType.ERROR);
-            Display.getDisplay(this).setCurrent(alertScreen);
-        }
     }
 
     public void destroyApp(boolean unconditional) {
-        try {
-            if (connectionNotifier != null) {
-                connectionNotifier.close();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            Alert alertScreen = new Alert("Error", "Ha ocurrido un error inesperado",
-                    null, AlertType.ERROR);
-            Display.getDisplay(this).setCurrent(alertScreen);
-
-        }
     }
 
     private void initialize() {
