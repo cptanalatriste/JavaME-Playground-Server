@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.edu.pucp.teleprocesamiento.server.form;
 
 import java.io.IOException;
@@ -43,5 +39,8 @@ public class ServerForm extends Form {
         StringItem bathroomStringItem = new StringItem("Iluminación - Baño:",
                 roomStatus.getLightStatus(RoomStatus.BATHROOM));
         this.append(bathroomStringItem);
+        StringItem tempStringItem = new StringItem("Temperatura:",
+                String.valueOf(roomStatus.getCurrentTemperature()));
+        this.append(tempStringItem);
     }
 }

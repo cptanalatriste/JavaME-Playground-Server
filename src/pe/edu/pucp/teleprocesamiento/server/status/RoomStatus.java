@@ -1,8 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.edu.pucp.teleprocesamiento.server.status;
+
+import java.util.Random;
 
 /**
  *
@@ -17,11 +15,14 @@ public class RoomStatus {
     public static final int BATHROOM = 4;
     public static final String LIGHT_IS_ON = "ON";
     public static final String LIGHT_IS_OFF = "OFF";
+    public static final int MAX_TEMP_DELTA = 10;
+    public static final int MIN_TEMP = 20;
     private boolean livingRoomLightOn;
     private boolean bedroom1LightOn;
     private boolean bedroom2LightOn;
     private boolean bedroom3LightOn;
     private boolean bathroomLightOn;
+    private int currentTemperature;
 
     private RoomStatus() {
         this.livingRoomLightOn = false;
@@ -29,6 +30,7 @@ public class RoomStatus {
         this.bedroom2LightOn = false;
         this.bedroom3LightOn = false;
         this.bathroomLightOn = false;
+        this.currentTemperature = MIN_TEMP;
     }
 
     public String getLightStatus(int roomCode) {
@@ -95,8 +97,19 @@ public class RoomStatus {
         return LIGHT_IS_OFF;
     }
 
+    public int getCurrentTemperature() {
+        return currentTemperature;
+    }
+
     public static RoomStatus getInstance() {
         return RoomStatusHolder.instance;
+    }
+
+    public int getTemperature() {
+        Random random = new Random();
+        int delta = random.nextInt(MAX_TEMP_DELTA);
+        this.currentTemperature = MIN_TEMP + delta;
+        return this.currentTemperature;
     }
 
     private static final class RoomStatusHolder {
