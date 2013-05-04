@@ -13,8 +13,8 @@ import pe.edu.pucp.teleprocesamiento.server.status.RoomStatus;
 public class SmsAlertManager extends Thread {
 
     private static final String CLIENT_NUMBER = "+5550000";
-    private static final String PORT = "5000";
-    public static final int SMS_PERIOD = 2000;
+    private static final String PORT = "1234";
+    public static final int SMS_PERIOD = 5000;
     private static final int MAXIMUM_TEMP = 27;
     private static final String ALERT_MESSAGE =
             "La temperatura ha superado los "
