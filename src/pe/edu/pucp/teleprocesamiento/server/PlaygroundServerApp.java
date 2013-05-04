@@ -10,18 +10,14 @@ import pe.edu.pucp.teleprocesamiento.server.form.ServerForm;
 import pe.edu.pucp.teleprocesamiento.server.sms.SmsAlertManager;
 
 /**
- * @author carlos
+ * MIDlet for Server part of the Java ME Application.
+ *
+ * @author Carlos G. Gavidia
  */
 public class PlaygroundServerApp extends MIDlet {
 
     public void startApp() {
         initialize();
-    }
-
-    public void pauseApp() {
-    }
-
-    public void destroyApp(boolean unconditional) {
     }
 
     private void initialize() {
@@ -42,5 +38,11 @@ public class PlaygroundServerApp extends MIDlet {
         serverConnection.start();
         SmsAlertManager alertManager = new SmsAlertManager(serverForm);
         alertManager.start();
+    }
+
+    public void pauseApp() {
+    }
+
+    public void destroyApp(boolean unconditional) {
     }
 }
