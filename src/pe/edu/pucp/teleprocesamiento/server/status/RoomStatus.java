@@ -4,7 +4,9 @@ import java.util.Random;
 
 /**
  *
- * @author carlos
+ * Represents current room status.
+ *
+ * @author Carlos G. Gavidia
  */
 public class RoomStatus {
 

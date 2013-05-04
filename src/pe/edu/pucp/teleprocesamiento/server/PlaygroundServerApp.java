@@ -2,7 +2,6 @@ package pe.edu.pucp.teleprocesamiento.server;
 
 import pe.edu.pucp.teleprocesamiento.server.http.HttpConnectionProcessor;
 import java.io.IOException;
-import javax.microedition.io.StreamConnectionNotifier;
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Display;

@@ -12,7 +12,9 @@ import pe.edu.pucp.teleprocesamiento.server.status.RoomStatus;
 
 /**
  *
- * @author carlos
+ * Handles HTTP requests.
+ *
+ * @author Carlos G. Gavidia
  */
 public class HttpConnectionProcessor extends Thread {
 

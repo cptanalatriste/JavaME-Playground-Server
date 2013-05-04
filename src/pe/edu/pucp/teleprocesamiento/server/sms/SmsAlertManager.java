@@ -8,7 +8,9 @@ import pe.edu.pucp.teleprocesamiento.server.status.RoomStatus;
 
 /**
  *
- * @author carlos
+ * Sends SMS Temperature alerts.
+ *
+ * @author Carlos G. Gavidia
  */
 public class SmsAlertManager extends Thread {
 
