@@ -10,7 +10,7 @@ import pe.edu.pucp.teleprocesamiento.server.form.ServerForm;
 import pe.edu.pucp.teleprocesamiento.server.sms.SmsAlertManager;
 
 /**
- * MIDlet for Server part of the Java ME Application.
+ * Main MIDlet for Server part of the Java ME Application.
  *
  * @author Carlos G. Gavidia
  */
