@@ -15,10 +15,11 @@ public class RoomStatus {
     public static final int BEDROOM_2 = 2;
     public static final int BEDROOM_3 = 3;
     public static final int BATHROOM = 4;
-    public static final String LIGHT_IS_ON = "ON";
-    public static final String LIGHT_IS_OFF = "OFF";
+    public static final String DEVICE_IS_ON = "ON";
+    public static final String DEVICE_IS_OFF = "OFF";
     public static final int MAX_TEMP_DELTA = 10;
     public static final int MIN_TEMP = 20;
+    private boolean livingRoomWifiOn;
     private boolean livingRoomLightOn;
     private boolean bedroom1LightOn;
     private boolean bedroom2LightOn;
@@ -32,6 +33,7 @@ public class RoomStatus {
         this.bedroom2LightOn = false;
         this.bedroom3LightOn = false;
         this.bathroomLightOn = false;
+        this.livingRoomLightOn = false;
         this.currentTemperature = MIN_TEMP;
     }
 
@@ -54,7 +56,7 @@ public class RoomStatus {
                 lightStatus = bathroomLightOn;
                 break;
         }
-        return lightStatus ? LIGHT_IS_ON : LIGHT_IS_OFF;
+        return lightStatus ? DEVICE_IS_ON : DEVICE_IS_OFF;
     }
 
     public String turnLightOn(int roomCode) {
@@ -75,7 +77,7 @@ public class RoomStatus {
                 bathroomLightOn = true;
                 break;
         }
-        return LIGHT_IS_ON;
+        return DEVICE_IS_ON;
     }
 
     public String turnLightOff(int roomCode) {
@@ -96,15 +98,7 @@ public class RoomStatus {
                 bathroomLightOn = false;
                 break;
         }
-        return LIGHT_IS_OFF;
-    }
-
-    public int getCurrentTemperature() {
-        return currentTemperature;
-    }
-
-    public static RoomStatus getInstance() {
-        return RoomStatusHolder.instance;
+        return DEVICE_IS_OFF;
     }
 
     public int getTemperature() {
@@ -112,6 +106,30 @@ public class RoomStatus {
         int delta = random.nextInt(MAX_TEMP_DELTA);
         this.currentTemperature = MIN_TEMP + delta;
         return this.currentTemperature;
+    }
+
+    public int getCurrentTemperature() {
+        return currentTemperature;
+    }
+
+    public void enableWifi() {
+        this.livingRoomWifiOn = true;
+    }
+
+    public void disableWifi() {
+        this.livingRoomWifiOn = false;
+    }
+
+    public String getWifiStatus() {
+        if (livingRoomWifiOn) {
+            return DEVICE_IS_ON;
+        } else {
+            return DEVICE_IS_OFF;
+        }
+    }
+
+    public static RoomStatus getInstance() {
+        return RoomStatusHolder.instance;
     }
 
     private static final class RoomStatusHolder {

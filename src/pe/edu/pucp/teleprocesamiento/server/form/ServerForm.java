@@ -28,6 +28,9 @@ public class ServerForm extends Form {
         StringItem livingRoomStringItem = new StringItem("Iluminación - Sala:",
                 roomStatus.getLightStatus(RoomStatus.LIVINGROOM));
         this.append(livingRoomStringItem);
+        StringItem wifiStringItem = new StringItem("Wi-fi - Sala:",
+                String.valueOf(roomStatus.getWifiStatus()));
+        this.append(wifiStringItem);
         StringItem bedroom1StringItem = new StringItem("Iluminación - Dormitorio 1:",
                 roomStatus.getLightStatus(RoomStatus.BEDROOM_1));
         this.append(bedroom1StringItem);
@@ -40,8 +43,9 @@ public class ServerForm extends Form {
         StringItem bathroomStringItem = new StringItem("Iluminación - Baño:",
                 roomStatus.getLightStatus(RoomStatus.BATHROOM));
         this.append(bathroomStringItem);
-        StringItem tempStringItem = new StringItem("Temperatura:",
+        StringItem tempStringItem = new StringItem("Temperatura - General:",
                 String.valueOf(roomStatus.getCurrentTemperature()));
         this.append(tempStringItem);
+
     }
 }
