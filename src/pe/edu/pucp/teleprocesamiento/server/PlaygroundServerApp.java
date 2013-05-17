@@ -6,15 +6,20 @@ import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.*;
+import pe.edu.pucp.teleprocesamiento.server.bluetooth.BluetoothConnectionManager;
 import pe.edu.pucp.teleprocesamiento.server.form.ServerForm;
 import pe.edu.pucp.teleprocesamiento.server.sms.SmsAlertManager;
 
 /**
- * Main MIDlet for Server part of the Java ME Application.
+ * MIDlet for Server part of the Java ME Application.
  *
  * @author Carlos G. Gavidia
  */
 public class PlaygroundServerApp extends MIDlet {
+
+    private HttpConnectionProcessor serverConnection;
+    private SmsAlertManager alertManager;
+    private BluetoothConnectionManager bluetoothManager;
 
     public void startApp() {
         initialize();
@@ -34,15 +39,23 @@ public class PlaygroundServerApp extends MIDlet {
     }
 
     private void startServices(ServerForm serverForm) throws IOException {
-        HttpConnectionProcessor serverConnection = new HttpConnectionProcessor(serverForm);
+        serverConnection = new HttpConnectionProcessor(serverForm);
+        alertManager = new SmsAlertManager(serverForm);
+        bluetoothManager = new BluetoothConnectionManager(serverForm);
+
         serverConnection.start();
-        SmsAlertManager alertManager = new SmsAlertManager(serverForm);
         alertManager.start();
+        bluetoothManager.start();
     }
 
     public void pauseApp() {
     }
 
     public void destroyApp(boolean unconditional) {
+        try {
+            bluetoothManager.stopServer();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
