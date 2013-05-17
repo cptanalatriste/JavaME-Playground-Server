@@ -23,6 +23,7 @@ public class HttpConnectionProcessor extends Thread {
     public static final String STATUS_ACTION = "STATUS";
     public static final String TURN_ON_ACTION = "ON";
     public static final String TURN_OFF_ACTION = "OFF";
+    public static final String HTTP_PORT = "8000";
     private final ServerForm serverForm;
 
     public HttpConnectionProcessor(ServerForm serverForm) {
@@ -41,7 +42,8 @@ public class HttpConnectionProcessor extends Thread {
             StreamConnectionNotifier connectionNotifier = null;
             try {
                 connectionNotifier =
-                        (StreamConnectionNotifier) Connector.open("socket://:80");
+                        (StreamConnectionNotifier) Connector.open("socket://:" 
+                        + HTTP_PORT);
                 connection = connectionNotifier.acceptAndOpen();
                 inputStream = connection.openInputStream();
                 int character;
