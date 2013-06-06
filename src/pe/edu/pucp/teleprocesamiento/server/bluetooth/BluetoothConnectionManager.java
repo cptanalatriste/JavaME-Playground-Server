@@ -14,7 +14,9 @@ import pe.edu.pucp.teleprocesamiento.server.status.RoomStatus;
 
 /**
  *
- * @author m523
+ * Manager for Bluetooth connections.
+ *
+ * @author Carlos G. Gavidia
  */
 public class BluetoothConnectionManager extends Thread {
 
@@ -36,34 +38,37 @@ public class BluetoothConnectionManager extends Thread {
     }
 
     public void run() {
-        try {
-            System.out.print("Starting bluetooth listening \n");
-            connection = connectionNotifier.acceptAndOpen();
-            InputStream inputStream = connection.openDataInputStream();
-            byte data[] = new byte[inputStream.read()];
-            int length = 0;
-            while (length != data.length) {
-                int dataRead = inputStream.read(data, length,
-                        data.length - length);
-                if (dataRead == -1) {
-                    System.out.println("character: " + dataRead);
-                }
-                length += dataRead;
-            }
-            inputStream.close();
-            connection.close();
-            String dataFromClient = new String(data);
-            System.out.println("dataFromClient: " + dataFromClient);
-            RoomStatus roomStatus = RoomStatus.getInstance();
-            if (ENABLE_WIFI_MESSAGE.equals(dataFromClient)) {
-                roomStatus.enableWifi();
-            } else {
-                roomStatus.disableWifi();
-            }
-            serverForm.refreshForm();
+        while (true) {
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            try {
+                System.out.print("Starting bluetooth listening \n");
+                connection = connectionNotifier.acceptAndOpen();
+                InputStream inputStream = connection.openDataInputStream();
+                byte data[] = new byte[inputStream.read()];
+                int length = 0;
+                while (length != data.length) {
+                    int dataRead = inputStream.read(data, length,
+                            data.length - length);
+                    if (dataRead == -1) {
+                        System.out.println("character: " + dataRead);
+                    }
+                    length += dataRead;
+                }
+                inputStream.close();
+                connection.close();
+                String dataFromClient = new String(data);
+                System.out.println("dataFromClient: " + dataFromClient);
+                RoomStatus roomStatus = RoomStatus.getInstance();
+                if (ENABLE_WIFI_MESSAGE.equals(dataFromClient)) {
+                    roomStatus.enableWifi();
+                } else {
+                    roomStatus.disableWifi();
+                }
+                serverForm.refreshForm();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
